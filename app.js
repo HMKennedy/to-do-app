@@ -1,6 +1,8 @@
 function onReady() {
   const toDos = [];
   const addToDoForm = document.getElementById('addToDoForm');
+  // step 1
+  let id = 0;
 
   function createNewToDo() {
     const newToDoText = document.getElementById('newToDoText');
@@ -8,7 +10,10 @@ function onReady() {
 
     toDos.push({
       title: newToDoText.value,
-      complete: false
+      complete: false,
+      // step 2 and 3
+      id: id++,
+
     });
 
     newToDoText.value = '';
@@ -25,18 +30,29 @@ function onReady() {
       const newLi = document.createElement('li');
       const checkbox = document.createElement('input');
       checkbox.type = "checkbox";
+      // step 4 make button
+      const delButton = document.createElement('button');
+      delButton.textContent = "Delete";
 
       newLi.textContent = toDo.title;
 
       toDoList.appendChild(newLi);
       newLi.appendChild(checkbox);
+      // step 4 append
+      newLi.appendChild(delButton);
     });
   }
 
-  addToDoForm.addEventListener('submit', event => {
-    event.preventDefault();
-    createNewToDo();
-  });
+    addToDoForm.addEventListener('submit', event => {
+      event.preventDefault();
+      createNewToDo();
+    });
+
+    // step 4, 5, 6 make button work
+    delButton.addEventListener('click', () => {
+      toDos = deleteToDo(toDo.id);
+      renderTheUI();
+    });
 
   renderTheUI();
 }
